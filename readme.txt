@@ -4,7 +4,7 @@ Tags: widget, facebook
 Author URI: http://twitter.com/bjornjohansen
 Requires at least: 3.2
 Tested up to: 3.5.1
-Stable tag: 0.3
+Stable tag: 0.3.1
 
 Widget that displays latest wall posts from a Facebook page without any hassle.
 
@@ -31,6 +31,9 @@ Displays latest wall posts from a Facebook page and shows the text with links to
 3. Easy to style to fit your theme
 
 == Changelog ==
+
+= Version 0.3.1 =
+* Added screenshots
 
 = Version 0.3 =
 * Option to display more posts
