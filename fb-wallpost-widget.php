@@ -3,7 +3,7 @@
 Plugin Name: FB Wallpost Widget
 Plugin URI: http://wordpress.org/extend/plugins/fb-wallpost-widget/
 Description: Widget that displays latest wall posts from a Facebook page without any hassle.
-Version: 0.3.2
+Version: 0.3.4
 Author: Bjørn Johansen
 Author URI: http://twitter.com/bjornjohansen
 License: GPL2
@@ -36,18 +36,13 @@ class FB_Wallpost_Widget extends WP_Widget {
 	}
 
 	public static function read_rss( $url ) {
-		// Create a stream so that we can set a User-Agent Facebook accepts
-		$opts = array(
-			'http' => array(
-				'method' => "GET",
-				'header' => "Accept-language: en\r\n" .
-							"User-Agent: Mozilla/5.0 (MSIE 9.0; Windows NT 6.1; Trident/5.0)\r\n"
-			)
-		);
-		$context = stream_context_create( $opts );
-		$contents = @file_get_contents( $url, false, $context );
-		$xml = @simplexml_load_string( $contents) ;
-		return $xml;
+		$tuff = false;
+		$response = wp_remote_get( $url );
+		if ( ! is_wp_error( $response ) && isset( $response['body'] ) ) {
+			$tuff = @simplexml_load_string( $response['body']);
+		}
+		
+		return $tuff;
 	}
 
 	public static function instance_transient_key( $instance ) {
@@ -62,17 +57,13 @@ class FB_Wallpost_Widget extends WP_Widget {
 			return;
 		}
 
-		if ( ! isset( $instance['title'] ) ) {
-			$instance['title'] = '';
-		}
+		$defaults = array(
+			'title'     => '',
+			'display'   => 'title',
+			'num_posts' => 1,
+		);
 
-		if ( ! isset( $instance['display'] ) ) {
-			$instance['display'] = 'title';
-		}
-
-		if ( ! isset( $instance['num_posts'] ) ) {
-			$instance['num_posts'] = 1;
-		}
+		$instance = wp_parse_args( $instance, $defaults );
 
 		$transient_key = self::instance_transient_key( $instance );
 
@@ -132,18 +123,14 @@ class FB_Wallpost_Widget extends WP_Widget {
 	
 	function form( $instance ) {
 
-		if ( ! isset( $instance['title'] ) ) {
-			$instance['title'] = '';
-		}
-		if ( ! isset( $instance['fb_page_url'] ) ) {
-			$instance['fb_page_url'] = '';
-		}
-		if ( ! isset( $instance['display'] ) ) {
-			$instance['display'] = 'title';
-		}
-		if ( ! isset( $instance['num_posts'] ) ) {
-			$instance['num_posts'] = 1;
-		}
+		$defaults = array(
+			'title'       => '',
+			'fb_page_url' => '',
+			'display'     => 'title',
+			'num_posts'   => 1,
+		);
+
+		$instance = wp_parse_args( $instance, $defaults );
 
 		?>
 		<p>
@@ -160,15 +147,15 @@ class FB_Wallpost_Widget extends WP_Widget {
 			<div class="description"><?php _e( 'Example: http://www.facebook.com/metronet/', 'fb-wallpost-widget' ); ?></div>
 		</p>
 		<?php if ( false ) : /* Not a good idea to show full post ATM, due to the links FB creates in the content. But we'll keep the code here to be ready if it'll ever change. */ ?>
-		<p>
-			<label for="<?php echo $this->get_field_id( 'display' ); ?>">
-				<?php _e( 'Display', 'fb-wallpost-widget' ); ?>:
-				<select id="<?php echo $this->get_field_id( 'display' ); ?>" name="<?php echo $this->get_field_name( 'display' ); ?>">
-					<option value="title" <?php selected( $instance['display'], 'title' ); ?>><?php _e( 'Title (with link)', 'fb-wallpost-widget' ); ?></option>
-					<option value="fullpost" <?php selected( $instance['display'], 'fullpost' ); ?>><?php _e( 'Full post', 'fb-wallpost-widget' ); ?></option>
-				</select>
-			</label>
-		</p>
+			<p>
+				<label for="<?php echo $this->get_field_id( 'display' ); ?>">
+					<?php _e( 'Display', 'fb-wallpost-widget' ); ?>:
+					<select id="<?php echo $this->get_field_id( 'display' ); ?>" name="<?php echo $this->get_field_name( 'display' ); ?>">
+						<option value="title" <?php selected( $instance['display'], 'title' ); ?>><?php _e( 'Title (with link)', 'fb-wallpost-widget' ); ?></option>
+						<option value="fullpost" <?php selected( $instance['display'], 'fullpost' ); ?>><?php _e( 'Full post', 'fb-wallpost-widget' ); ?></option>
+					</select>
+				</label>
+			</p>
 		<?php endif; ?>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'num_posts' ); ?>">

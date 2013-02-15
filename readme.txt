@@ -4,7 +4,7 @@ Tags: widget, facebook
 Author URI: http://twitter.com/bjornjohansen
 Requires at least: 3.2
 Tested up to: 3.5.1
-Stable tag: 0.3.2
+Stable tag: 0.3.4
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,6 +33,14 @@ Displays latest wall posts from a Facebook page and shows the text with links to
 3. Easy to style to fit your theme
 
 == Changelog ==
+
+= Version 0.3.4 =
+* Just under-the-hood improvements:
+* Using wp_remote_get, there's no need to spoof the user-agent
+* Better defaults handling
+
+= Version 0.3.3 =
+* SVN mess. Skip this.
 
 = Version 0.3.2 =
 * Updated readme.txt
