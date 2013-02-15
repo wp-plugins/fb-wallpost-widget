@@ -1,12 +1,10 @@
 === FB Wallpost Widget ===
 Contributors: bjornjohansen, metronet
 Tags: widget, facebook
-Author URI: http://twitter.com/bjornjohansen
+Author URI: http://metronet.no
 Requires at least: 3.2
 Tested up to: 3.5.1
-Stable tag: 0.3.2
-License: GPLv2
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Stable tag: 0.3.1
 
 Widget that displays latest wall posts from a Facebook page without any hassle.
 
@@ -26,20 +24,12 @@ Displays latest wall posts from a Facebook page and shows the text with links to
 2. Upload the 'fb-wallpost-widget' folder to the '/wp-content/plugins/' directory,
 3. Activate the plugin through the 'Plugins' menu in WordPress.
 
-== Screenshots ==
-
-1. Widget settings
-2. Plain output (this is twentytwelve)
-3. Easy to style to fit your theme
-
 == Changelog ==
 
-= Version 0.3.2 =
-* Updated readme.txt
-* Moved screenshots to /assets
-
 = Version 0.3.1 =
-* Added screenshots
+* Just under-the-hood improvements:
+* Using wp_remote_get, there's no need to spoof the user-agent
+* Better defaults handling
 
 = Version 0.3 =
 * Option to display more posts
@@ -69,12 +59,6 @@ Displays latest wall posts from a Facebook page and shows the text with links to
 
 = Version 0.1 =
 * It works
-
-
-== Upgrade Notice ==
-
-= 0.3 =
-Display more posts.
 
 
 
