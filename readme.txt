@@ -24,6 +24,12 @@ Displays latest wall posts from a Facebook page and shows the text with links to
 2. Upload the 'fb-wallpost-widget' folder to the '/wp-content/plugins/' directory,
 3. Activate the plugin through the 'Plugins' menu in WordPress.
 
+== Screenshots ==
+
+1. Widget settings
+2. Plain output (this is twentytwelve)
+3. Easy to style to fit your theme
+
 == Changelog ==
 
 = Version 0.3 =
