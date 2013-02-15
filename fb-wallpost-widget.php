@@ -3,10 +3,11 @@
 Plugin Name: FB Wallpost Widget
 Plugin URI: http://wordpress.org/extend/plugins/fb-wallpost-widget/
 Description: Widget that displays latest wall posts from a Facebook page without any hassle.
-Version: 0.3.1
-Author: Bjørn Johansen/Metronet
-Author URI: http://metronet.no
+Version: 0.3.2
+Author: Bjørn Johansen
+Author URI: http://twitter.com/bjornjohansen
 License: GPL2
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: fb-wallpost-widget
 Domain Path: /languages/
 
@@ -35,16 +36,18 @@ class FB_Wallpost_Widget extends WP_Widget {
 	}
 
 	public static function read_rss( $url ) {
-		
-		$tuff = false;
-
-		$response = wp_remote_get( $url );
-		if ( ! is_wp_error( $response ) ) {
-			$contents = $response['body'];
-			$tuff = @simplexml_load_string( $contents);
-		}
-		
-		return $tuff;
+		// Create a stream so that we can set a User-Agent Facebook accepts
+		$opts = array(
+			'http' => array(
+				'method' => "GET",
+				'header' => "Accept-language: en\r\n" .
+							"User-Agent: Mozilla/5.0 (MSIE 9.0; Windows NT 6.1; Trident/5.0)\r\n"
+			)
+		);
+		$context = stream_context_create( $opts );
+		$contents = @file_get_contents( $url, false, $context );
+		$xml = @simplexml_load_string( $contents) ;
+		return $xml;
 	}
 
 	public static function instance_transient_key( $instance ) {
@@ -59,14 +62,17 @@ class FB_Wallpost_Widget extends WP_Widget {
 			return;
 		}
 
-		$defaults = array(
-			'title'     => '',
-			'display'   => 'title',
-			'num_posts' => 1,
-		);
+		if ( ! isset( $instance['title'] ) ) {
+			$instance['title'] = '';
+		}
 
-		$instance = wp_parse_args( $instance, $defaults );
+		if ( ! isset( $instance['display'] ) ) {
+			$instance['display'] = 'title';
+		}
 
+		if ( ! isset( $instance['num_posts'] ) ) {
+			$instance['num_posts'] = 1;
+		}
 
 		$transient_key = self::instance_transient_key( $instance );
 
@@ -126,14 +132,18 @@ class FB_Wallpost_Widget extends WP_Widget {
 	
 	function form( $instance ) {
 
-		$defaults = array(
-			'title'       => '',
-			'fb_page_url' => '',
-			'display'     => 'title',
-			'num_posts'   => 1,
-		);
-
-		$instance = wp_parse_args( $instance, $defaults );
+		if ( ! isset( $instance['title'] ) ) {
+			$instance['title'] = '';
+		}
+		if ( ! isset( $instance['fb_page_url'] ) ) {
+			$instance['fb_page_url'] = '';
+		}
+		if ( ! isset( $instance['display'] ) ) {
+			$instance['display'] = 'title';
+		}
+		if ( ! isset( $instance['num_posts'] ) ) {
+			$instance['num_posts'] = 1;
+		}
 
 		?>
 		<p>
