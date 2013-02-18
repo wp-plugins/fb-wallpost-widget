@@ -1,0 +1,71 @@
+# Copyright (C) 2013 FB Wallpost Widget
+# This file is distributed under the same license as the FB Wallpost Widget package.
+msgid ""
+msgstr ""
+"Project-Id-Version: FB Wallpost Widget 0.3\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/fb-wallpost-widget\n"
+"POT-Creation-Date: 2013-02-14 15:36:08+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2013-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: fb-wallpost-widget.php:34
+msgid "Facebook Wall Post"
+msgstr ""
+
+#: fb-wallpost-widget.php:34
+msgid "Display latest wall posts from a Facebook page"
+msgstr ""
+
+#: fb-wallpost-widget.php:150
+msgid "Title"
+msgstr ""
+
+#: fb-wallpost-widget.php:156
+msgid "FB Page URL"
+msgstr ""
+
+#: fb-wallpost-widget.php:159
+msgid "Example: http://www.facebook.com/metronet/"
+msgstr ""
+
+#: fb-wallpost-widget.php:164
+msgid "Display"
+msgstr ""
+
+#: fb-wallpost-widget.php:166
+msgid "Title (with link)"
+msgstr ""
+
+#: fb-wallpost-widget.php:167
+msgid "Full post"
+msgstr ""
+
+#: fb-wallpost-widget.php:174
+msgid "Num posts"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "FB Wallpost Widget"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://wordpress.org/extend/plugins/fb-wallpost-widget/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Widget that displays latest wall posts from a Facebook page without any "
+"hassle."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Bjørn Johansen/Metronet"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://metronet.no"
+msgstr ""
