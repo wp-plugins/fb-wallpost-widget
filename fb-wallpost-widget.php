@@ -3,7 +3,7 @@
 Plugin Name: FB Wallpost Widget
 Plugin URI: http://wordpress.org/extend/plugins/fb-wallpost-widget/
 Description: Widget that displays latest wall posts from a Facebook page without any hassle.
-Version: 0.3.4
+Version: 0.3.5
 Author: Bjørn Johansen
 Author URI: http://twitter.com/bjornjohansen
 License: GPL2
@@ -109,8 +109,13 @@ class FB_Wallpost_Widget extends WP_Widget {
 	function update( $new_instance, $old_instance ) {
 
 		if ( $new_instance['fb_page_url'] != $old_instance['fb_page_url'] ) {
-			$graphdata = json_decode( file_get_contents( 'http://graph.facebook.com/?id=' . $new_instance['fb_page_url'] ) );
-			$new_instance['FB_UID'] = $graphdata->id;
+			$graph_response = wp_remote_get( 'http://graph.facebook.com/?id=' . $new_instance['fb_page_url'] );
+			if ( ! is_wp_error( $graph_response ) ) {
+				$graphdata = json_decode( $graph_response['body'] );
+				if ( isset( $graphdata->id ) ) {
+					$new_instance['FB_UID'] = $graphdata->id;
+				}
+			}
 		} else {
 			$new_instance['FB_UID'] = $old_instance['FB_UID'];
 		}
